@@ -50,7 +50,7 @@ namespace ChromeModForNet
 
         #region Init
 
-        async internal Task<CallResult<IChromeSession>> GetChromeSession(string proxisString, string ua, bool isDebug = false, bool headless = true)
+        async public Task<CallResult<IChromeSession>> GetChromeSession(string proxisString, string ua, bool isDebug = false, bool headless = true)
         {
             L.Trace();
             CallResult<IChromeSession> chromeSessionResult = new CallResult<IChromeSession>();
@@ -167,7 +167,7 @@ namespace ChromeModForNet
         /// </summary>
         /// <param name="port"></param>
         /// <returns></returns>
-        async internal Task<CallResult<IChromeSession>> GetChromeSession(int port)
+        async public Task<CallResult<IChromeSession>> GetChromeSession(int port)
         {
             CallResult<IChromeSession> chromeSessionResult = new CallResult<IChromeSession>();
 
@@ -285,7 +285,7 @@ namespace ChromeModForNet
             return 0;
         }
 
-        async internal Task SetCookies(IAcc acc)
+        async public Task SetCookies(IAcc acc)
         {
             L.Trace();
             string json = acc.Cookies.Value;
@@ -441,7 +441,7 @@ namespace ChromeModForNet
             }
         }
 
-        async internal Task<bool> IsElementExist(string cssSelector)
+        async public Task<bool> IsElementExist(string cssSelector)
         {
             long id = await IsElementExist(cssSelector, new StringCollection());
             if (id == 0)
@@ -450,7 +450,7 @@ namespace ChromeModForNet
                 return true;
         }
 
-        async internal Task<long> IsElementExist(string cssSelector, StringCollection tampax = null)
+        async public Task<long> IsElementExist(string cssSelector, StringCollection tampax = null)
         {
             try
             {
@@ -470,7 +470,7 @@ namespace ChromeModForNet
             }
         }
 
-        async internal Task<bool> IsElementExist(string cssSelector, string text)
+        async public Task<bool> IsElementExist(string cssSelector, string text)
         {
             long id = await IsElementExist(cssSelector, text, new StringCollection());
             if (id == 0)
@@ -487,7 +487,7 @@ namespace ChromeModForNet
         /// <param name="text"></param>
         /// <param name="tampax"></param>
         /// <returns></returns>
-        async internal Task<long> IsElementExist(string cssSelector, string text, StringCollection tampax = null)
+        async public Task<long> IsElementExist(string cssSelector, string text, StringCollection tampax = null)
         {
             try
             {
@@ -524,7 +524,7 @@ namespace ChromeModForNet
             }
         }
 
-        async internal Task<string> GetCurrentUrl()
+        async public Task<string> GetCurrentUrl()
         {
             string url = "";
             try
@@ -547,7 +547,7 @@ namespace ChromeModForNet
             return url;
         }
 
-        async internal Task<CDPResponse> InsertText(string cssSelector, string text)
+        async public Task<CDPResponse> InsertText(string cssSelector, string text)
         {
             CDPResponse cdpr = new CDPResponse();
             try
@@ -579,7 +579,7 @@ namespace ChromeModForNet
             return cdpr;
         }
 
-        async internal Task<Cookie[]> GetCookies()
+        async public Task<Cookie[]> GetCookies()
         {
             Cookie[] cookies = null;
             try
@@ -593,7 +593,7 @@ namespace ChromeModForNet
             return cookies;
         }
 
-        async internal Task<long> GetNodeId(string cssSelector)
+        async public Task<long> GetNodeId(string cssSelector)
         {
             long elementNodeId = 0;
             try
@@ -614,7 +614,7 @@ namespace ChromeModForNet
             return elementNodeId;
         }
 
-        async internal Task<string> GetAttribute(long nodeId, string attrName)
+        async public Task<string> GetAttribute(long nodeId, string attrName)
         {
             string attrValue = null;
             try
@@ -640,7 +640,7 @@ namespace ChromeModForNet
             return attrValue;
         }
 
-        async internal Task RunScript(string script)
+        async public Task RunScript(string script)
         {
             try
             {
@@ -655,7 +655,7 @@ namespace ChromeModForNet
             }
         }
 
-        async internal Task<string> GetHtml()
+        async public Task<string> GetHtml()
         {
             string outerHtml = "";
             try
@@ -674,7 +674,7 @@ namespace ChromeModForNet
             return outerHtml;
         }
 
-        async internal Task ScrollToElement(string cssSelector, int plus = 0)
+        async public Task ScrollToElement(string cssSelector, int plus = 0)
         {
             try
             {
@@ -687,7 +687,7 @@ namespace ChromeModForNet
             }
         }
 
-        async internal Task ScrollToElement(long nodeId, int plus = 0)
+        async public Task ScrollToElement(long nodeId, int plus = 0)
         {
             try
             {
@@ -716,6 +716,25 @@ namespace ChromeModForNet
             }
         }
 
+        async public Task Scroll(int plus)
+        {
+            try
+            {
+                var scroll = await chromeSession.SendAsync(new Chrome.Input.DispatchMouseEventCommand
+                {
+                    Type = "mouseWheel",
+                    X = 1,
+                    Y = 2,
+                    DeltaX = 0,
+                    DeltaY = plus
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         private long GetDocNodeID()
         {
             long docNodeId = 0;
@@ -735,7 +754,7 @@ namespace ChromeModForNet
             }
         }
 
-        async internal Task<CDPResponse> Click(string cssSelector)
+        async public Task<CDPResponse> Click(string cssSelector)
         {
             CDPResponse cdpr = new CDPResponse();
             try
@@ -792,7 +811,7 @@ namespace ChromeModForNet
             return cdpr;
         }
 
-        async internal Task<CDPResponse> Click(long nodeId)
+        async public Task<CDPResponse> Click(long nodeId)
         {
             CDPResponse cdpr = new CDPResponse();
             try
@@ -903,7 +922,7 @@ namespace ChromeModForNet
             return cdpr;
         }
 
-        internal BitmapImage CaptureScreenshot(string format)
+        public BitmapImage CaptureScreenshot(string format)
         {
             var screenshot = chromeSession.SendAsync(new CaptureScreenshotCommand { Format = "png" }).Result;
             var byteArr = Convert.FromBase64String(screenshot.Result.Data);

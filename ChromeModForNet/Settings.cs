@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace ChromeModForNet
 {
+    enum BrowserType
+    {
+        ChromiumFX,
+        Chromium,
+        HeadlessChromium
+    }
+
     class Settings
     {
         public static string AplicationPath { get { return System.Windows.Forms.Application.StartupPath; } }
@@ -15,5 +22,6 @@ namespace ChromeModForNet
         public static int MaxDebugPort = 59999;
         public static int ViewPortWidth = 800;
         public static int ViewPortHeight = 600;
+        public static BrowserType BrType { get; set; } = BrowserType.ChromiumFX;
     }
 }
