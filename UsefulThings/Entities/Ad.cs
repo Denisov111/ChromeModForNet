@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace UsefulThings.Entities
+namespace UsefulThings
 {
     public class Ad
     {
