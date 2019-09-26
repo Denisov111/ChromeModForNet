@@ -50,6 +50,7 @@
     <Compile Include="Entities\CDPResponse.cs" />
     <Compile Include="Entities\Error.cs" />
     <Compile Include="Entities\Proxy.cs" />
+    <Compile Include="Func\Helpers.cs" />
     <Compile Include="Func\L.cs" />
     <Compile Include="Interfaces\IAcc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
