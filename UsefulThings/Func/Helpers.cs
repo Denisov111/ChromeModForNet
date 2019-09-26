@@ -13,18 +13,22 @@ namespace UsefulThings.Func
         {
             StringCollection coll = new StringCollection();
 
-            string[] s = list.Split(new Char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string str in s)
+            if(list!=null)
             {
+                string[] s = list.Split(new Char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-                char[] charsToTrim = { '\n', '\r' };
-                string str_trim = str.Trim(charsToTrim);
-                if (str_trim != null && str_trim != "" && str_trim != String.Empty)
+                foreach (string str in s)
                 {
-                    coll.Add(str_trim);
+
+                    char[] charsToTrim = { '\n', '\r' };
+                    string str_trim = str.Trim(charsToTrim);
+                    if (str_trim != null && str_trim != "" && str_trim != String.Empty)
+                    {
+                        coll.Add(str_trim);
+                    }
                 }
             }
+
             return coll;
         }
     }
