@@ -20,6 +20,12 @@ namespace UsefulThings
         High
     }
 
+    public enum ProxyProtocol
+    {
+        HTTP,
+        SOCKS5
+    }
+
     public class Proxy : INotifyPropertyChanged
     {
 
@@ -32,6 +38,7 @@ namespace UsefulThings
         public string Port { get; set; }
         public string Login { get; set; }
         public string Pwd { get; set; }
+        public ProxyProtocol ProxyProtocol { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
         public string Mode { get; set; } = "1";
