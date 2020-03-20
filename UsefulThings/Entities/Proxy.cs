@@ -26,6 +26,13 @@ namespace UsefulThings
         SOCKS5
     }
 
+    public enum ProxyWorkStatus
+    {
+        Unknow,
+        IsAvailable,
+        NotAvailable
+    }
+
     public class Proxy : INotifyPropertyChanged
     {
 
@@ -39,26 +46,7 @@ namespace UsefulThings
         public string Login { get; set; }
         public string Pwd { get; set; }
         public ProxyProtocol ProxyProtocol { get; set; }
-        public string Type { get; set; }
-        public string Status { get; set; }
-        public string Mode { get; set; } = "1";
-        public bool IsGoodVKAccess
-        {
-            get { return isGoodVKAccess; }
-            set
-            {
-                isGoodVKAccess = value;
-                OnPropertyChanged("IsGoodVKAccess");
-                OnPropertyChanged("IsGoodVKAccessView");
-            }
-        }
-        public string IsGoodVKAccessView
-        {
-            get
-            {
-                return (IsGoodVKAccess) ? "есть" : "нет";
-            }
-        }
+        public ProxyWorkStatus ProxyWorkStatus { get; set; }
         public bool IsAnonimous { get; set; }
         public Anonimity Anonimity
         {
@@ -79,16 +67,24 @@ namespace UsefulThings
 
         public Proxy() { }
 
-        public Proxy(int id, string ip, string port, string login, string pwd, string type, string status, string mode)
+        public Proxy(int id, string ip, string port, string login, string pwd, ProxyProtocol protocol, ProxyWorkStatus status)
         {
             Id = id;
             Ip = ip;
             Port = port;
             Login = login;
             Pwd = pwd;
-            Type = type;
-            Status = status;
-            Mode = mode;
+            ProxyProtocol = protocol;
+            ProxyWorkStatus = status;
+        }
+
+        public Proxy(string ip, string port, string login, string pwd, ProxyProtocol protocol)
+        {
+            Ip = ip;
+            Port = port;
+            Login = login;
+            Pwd = pwd;
+            ProxyProtocol = protocol;
         }
 
         public Proxy(string proxyString)
@@ -107,14 +103,6 @@ namespace UsefulThings
                 if (loginPass.Length < 2) throw new ArgumentException("Неверный формат строки прокси-сервера: " + proxyString);
                 Login = loginPass[0];
                 Pwd = loginPass[1];
-                if (loginPass.Count() > 2)
-                {
-                    Type = loginPass[2];
-                }
-                else
-                {
-                    Type = "HTTP";
-                }
             }
             else
             {
@@ -122,7 +110,6 @@ namespace UsefulThings
                 if (s.Length != 2) throw new ArgumentException("Неверный формат строки прокси-сервера: " + proxyString);
                 Ip = s[0];
                 Port = s[1];
-                Type = "HTTP";
             }
         }
 
@@ -134,8 +121,13 @@ namespace UsefulThings
             Port = el.Element("port").Value;
             Login = el.Element("login").Value;
             Pwd = el.Element("pwd").Value;
-            Type = el.Element("type").Value;
+            ProxyProtocol = GetProtocolTypeFromString( el.Element("protocol_type").Value);
 
+        }
+
+        private ProxyProtocol GetProtocolTypeFromString(string value)
+        {
+            throw new NotImplementedException();
         }
 
         public static StringCollection GetProxiesCol()

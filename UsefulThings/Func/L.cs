@@ -35,11 +35,11 @@ namespace UsefulThings
             text += "\n\r\n\rСтек вызовов:\n\r " + ex.StackTrace + "\n\r\n\rМетод:\n\r\n\r" + ex.TargetSite;
             try
             {
-                MessageBox.Show("Произошла ошибка. Информация об ошибке отправлена разработчику.\n\n" + text, "Ошибка программы");
+                System.Windows.Forms.MessageBox.Show("Произошла ошибка. Информация об ошибке отправлена разработчику.\n\n" + text, "Ошибка программы");
             }
             catch (System.Exception ex2)
             {
-                MessageBox.Show("Произошла ошибка. Информацию об ошибке отправить разработчику не удалось.\n\n" + ex2.ToString(), "\nОшибка программы");
+                System.Windows.Forms.MessageBox.Show("Произошла ошибка. Информацию об ошибке отправить разработчику не удалось.\n\n" + ex2.ToString(), "\nОшибка программы");
             }
         }
 
