@@ -11,6 +11,7 @@ namespace UsefulThings
     {
         public string Id { get; set; } 
         public string Url { get; set; }
+
         public string ImgPath { get; set; }
         public string UploadImageStatus { get; set; }
         public string Title { get; set; }
